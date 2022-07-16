@@ -38,8 +38,6 @@ services:
 
   backend:
     container_name: duck-backend
-    ports:
-        - '3000:3000'
     build:
       context: .
       dockerfile: ./Dockerfile
