@@ -10,8 +10,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        broadcast(new MessageSend('test'))->toOthers();
-
         return Inertia::render('Users', [
             'users' => User::query()->with('roles')->paginate(5),
         ]);

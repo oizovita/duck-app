@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/message', 'ChatController@index');
+Route::get('/message', 'ChatController@index');
