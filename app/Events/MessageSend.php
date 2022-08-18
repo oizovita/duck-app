@@ -7,8 +7,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class MessageSend
+class MessageSend implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -18,7 +19,7 @@ class MessageSend
      *
      * @return void
      */
-    public function __construct(private $message)
+    public function __construct(public string $message)
     {
     }
 
@@ -36,6 +37,6 @@ class MessageSend
      */
     public function broadcastOn(): Channel|PrivateChannel|array
     {
-        return new Channel('admin');
+        return new PrivateChannel('admin');
     }
 }

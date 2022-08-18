@@ -9,7 +9,6 @@ class ChatController extends Controller
 {
     public function index(Request $request)
     {
-        event(new MessageSend('$message'));
-
+        MessageSend::dispatch($request->get('message'));
     }
 }

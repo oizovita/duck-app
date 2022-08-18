@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('admin', function ($user, $id) {
+
     return true;
-});
+}, ['guards' => ['web']]);
