@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('admin', function ($user, $id) {
+Broadcast::channel('admin', function (User $user) {
+    return $user->hasRole('admin');
+}, ['guards' => ['web']]);
 
-    return true;
+Broadcast::channel('user', function (User $user) {
+    return $user->hasRole('user') or $user->hasRole('admin');
 }, ['guards' => ['web']]);

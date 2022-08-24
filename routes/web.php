@@ -31,6 +31,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/users', [UserController::class, 'index'])->middleware(['auth'])->name('users');
 
-Route::inertia('/chat', 'Chat', ['user' => auth()->user()])->middleware(['auth']);
+Route::inertia('/chat', 'Chat', ['user' => auth()->user()])->middleware(['auth'])->name('chat');
 
 require __DIR__.'/auth.php';

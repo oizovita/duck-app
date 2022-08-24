@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
         DB::table('users')->truncate();
         Schema::enableForeignKeyConstraints();
 
-        $user = User::create([
+        $user = User::query()->firstOrCreate([
             'email' => 'admin@duck.app',
             'password' => Hash::make('duck'),
             'name' => 'Duck Admin',
         ]);
-        $user->roles()->attach(Role::where('slug', 'admin')->first());
+        $user->assignRole('admin');
     }
 }
