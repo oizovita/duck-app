@@ -20,6 +20,6 @@ class RoleSeeder extends Seeder
             'user',
         ];
 
-        collect($roles)->each(fn($role) => Role::create(['name' => $role]));
+        collect($roles)->each(fn($role) => Role::query()->firstOrCreate(['name' => $role]));
     }
 }

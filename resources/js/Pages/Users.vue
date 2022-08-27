@@ -2,9 +2,8 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import {Head, Link} from '@inertiajs/inertia-vue3';
 // import Pagination from "@/Components/Pagination";
-Echo.channel('admin').listen('MessageSend', e => {
-    console.log(e)
-})
+
+
 
 </script>
 

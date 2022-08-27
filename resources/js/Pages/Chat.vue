@@ -1,48 +1,37 @@
 <template>
-    <div class="chatbox p-3">
-        <div class="messages" v-if="messages.length">
-            <div class="message" v-for="message in messages">
-                <span class="d-inline-block">{{ message }}</span>
-                <span> {{ user }}</span>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-3">
-                <input type="text" class="form-control" v-model="textMessage"/>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col">
-                <button class="btn btn-primary" @click="sendMessage()">Send</button>
+    <div class="flex h-screen antialiased text-gray-800">
+        <div class="flex flex-row h-full w-full overflow-x-hidden">
+            <ChatSidebar :rooms="rooms" :users="users" @changeRoom="changeRoom"></ChatSidebar>
+            <div class="flex flex-col flex-auto h-full p-6">
+                <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
+                    <MessageField></MessageField>
+                    <Input></Input>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Room from "@/Components/Chat/Room.vue";
+import ChatSidebar from "@/Components/Chat/Sidebar.vue";
+import Input from "@/Components/Chat/Input.vue";
+import MessageField from "@/Components/Chat/MessageField.vue";
+
 export default {
-    data() {
-        return {
-            textMessage: '',
-            messages: [],
-        }
+    components: {
+        MessageField,
+        Input,
+        ChatSidebar,
+        Room
     },
-    created() {
-        this.addMessage('You joined the chatbox.');
-        Echo.private('admin')
-            .listen('MessageSend', (e) => {
-                this.addMessage(e.message);
-            });
+    props:{
+        user: Object,
+        rooms: Array
     },
     methods: {
-        addMessage(message) {
-            let date= new Date();
-            let timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-            this.messages.push(timestamp + ' ' + message);
-        },
-        sendMessage() {
-            axios.post('/api/message', {message: this.textMessage});
-            this.textMessage = '';
+        changeRoom: function() {
+
         }
     }
 }

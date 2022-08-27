@@ -22,6 +22,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('duck'),
             'name' => 'Duck Admin',
         ]);
-        $user->assignRole('admin');
+        $user->assignRole('admin', 'user');
     }
 }

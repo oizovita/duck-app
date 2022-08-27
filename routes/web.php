@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/users', [UserController::class, 'index'])->middleware(['auth'])->name('users');
 
-Route::inertia('/chat', 'Chat', ['user' => auth()->user()])->middleware(['auth'])->name('chat');
+Route::get('/chat', [ChatController::class, 'index'])->middleware(['auth'])->name('chat');
+
 
 require __DIR__.'/auth.php';
