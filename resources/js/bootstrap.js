@@ -35,3 +35,11 @@ window.Echo = new Echo({
     disableStats: true,
     enabledTransports: ['ws', 'wss'],
 });
+
+window.websoket = new WebSocket("ws://localhost/soketi/app/app-key");
+
+websoket.onopen = function(event) {
+    console.log(event)
+    console.log("Successfully connected to the echo websocket server...")
+}
+

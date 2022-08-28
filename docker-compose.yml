@@ -73,6 +73,8 @@ services:
         environment:
             DEBUG: ${SOKETI_DEBUG:-1}
             METRICS_SERVER_PORT: ${SOKETI_METRICS_SERVER_PORT:-9601}
+            SOKETI_DB_REDIS_HOST: ${REDIS_HOST:-127.0.0.1}
+            SOKETI_DB_REDIS_PORT: ${REDIS_PORT:-6379}
         networks:
             - duck_net
         logging:
@@ -117,6 +119,43 @@ services:
             options:
                 max-size: "10M"
                 max-file: "5"
+
+    horizon:
+        command: horizon
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        env_file:
+            - .env
+        environment:
+            - DB_HOST=${DB_HOST:-db}
+            - DB_PORT=${DB_PORT:-5432}
+            - DB_DATABASE=${DB_DATABASE:-postgres}
+            - DB_USERNAME=${DB_USERNAME:-postgres}
+            - DB_PASSWORD=${DB_PASSWORD:-postgres}
+            - REDIS_HOST=redis
+            - REDIS_PASSWORD=null
+            - REDIS_PORT=6379
+            - MODE=horizon
+            - ENVIRONMENT=DEVELOPMENT
+        volumes:
+            - ./:/var/www/html/laravelapp:rw
+            - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:rw
+        restart: unless-stopped
+        networks:
+            - duck_net
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10M"
+                max-file: "5"
+        healthcheck:
+            test: [ "CMD", "/bin/bash", "docker-healthcheck.sh" ]
+            interval: 60s
+            timeout: 10s
+            start_period: 60s
+            retries: 3
+        stop_signal: SIGTERM
 
 networks:
     duck_net:

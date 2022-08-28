@@ -29,6 +29,14 @@ export default {
             .listen('MessageSend', (e) => {
                 this.addMessage(e.message);
             });
+
+        // websoket.onmessage = function(event) {
+        //     const { data, event } = JSON.parse(message.data);
+        //     if (event === 'MessageSend') {
+        //         this.addMessage(JSON.parse(data)['message']);
+        //     }
+        //
+        // }
     },
     methods: {
         addMessage(message) {

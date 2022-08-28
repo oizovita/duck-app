@@ -10,4 +10,8 @@ elif [ "$MODE" == "nginx" ]; then
 
   /usr/sbin/service nginx status | grep 'is running'
 
+elif [ "$MODE" == "horizon" ]; then
+
+  php artisan horizon:status
+
 fi
