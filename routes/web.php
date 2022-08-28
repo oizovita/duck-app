@@ -35,4 +35,4 @@ Route::get('/users', [UserController::class, 'index'])->middleware(['auth'])->na
 Route::get('/chat', [ChatController::class, 'index'])->middleware(['auth'])->name('chat');
 
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';

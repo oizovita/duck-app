@@ -55,6 +55,10 @@ if [ "$1" == "backend" ]; then
 
     runcmd "php artisan storage:link"
 
+    runcmd "php artisan jwt:secret --force"
+
+    runcmd "php artisan jwt:generate-certs --force --algo=rsa --bits=4096 --sha=512"
+
     set +e
     runcmd "chown -R www-data:www-data ${STORAGE_FOLDER}"
     set -e

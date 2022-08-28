@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use App\Attributes\Route;
+use Illuminate\Http\RedirectResponse;
 
 class PasswordResetLinkController extends Controller
 {
@@ -15,6 +17,7 @@ class PasswordResetLinkController extends Controller
      *
      * @return \Inertia\Response
      */
+    #[Route(method: 'get', path: 'forgot-password', middlewares: ['guest'], name: 'password.request')]
     public function create()
     {
         return Inertia::render('Auth/ForgotPassword', [
@@ -25,11 +28,12 @@ class PasswordResetLinkController extends Controller
     /**
      * Handle an incoming password reset link request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  Request  $request
+     * @return RedirectResponse
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
+    #[Route(method: 'post', path: 'forgot-password', middlewares: ['guest'], name: 'password.email')]
     public function store(Request $request)
     {
         $request->validate([

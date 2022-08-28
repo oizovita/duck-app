@@ -11,15 +11,19 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Inertia\Response;
+use App\Attributes\Route;
 
 class NewPasswordController extends Controller
 {
     /**
+     *
      * Display the password reset view.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Inertia\Response
+     * @param  Request  $request
+     * @return Response
      */
+    #[Route(method: 'get', path: 'reset-password/{token}', middlewares: ['guest'], name: 'password.reset')]
     public function create(Request $request)
     {
         return Inertia::render('Auth/ResetPassword', [
@@ -31,11 +35,12 @@ class NewPasswordController extends Controller
     /**
      * Handle an incoming new password request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+    #[Route(method: 'post', path: 'reset-password', middlewares: ['guest'], name: 'password.update')]
     public function store(Request $request)
     {
         $request->validate([
